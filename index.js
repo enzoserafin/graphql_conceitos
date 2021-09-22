@@ -1,18 +1,42 @@
-const { gql, ApolloServer } = require("apollo-server");
+const { gql, ApolloServer } = require("apollo-server")
 
-const resolvers = {
-    Query: {
-        hello() {
-            return 'World';
-        }
-    }
-}
+/*
+Scalar Types
+ - Int
+ - Float
+ - String
+ - Boolean
+ - ID
+*/
 
 const typeDefs = gql`
     type Query {
-        hello: String
-    }    
+        idade: Int
+        salario: Float
+        nome: String
+        ativo: Boolean
+        id: ID
+    }
 `
+const resolvers = {
+    Query: {
+        idade() {
+            return 18;
+        },
+        salario() {
+            return 1234, 56
+        },
+        nome() {
+            return 'GraphQL'
+        },
+        ativo() {
+            return true
+        },
+        id() {
+            return 1234564987
+        }
+    }
+}
 
 const server = new ApolloServer({
     typeDefs,
