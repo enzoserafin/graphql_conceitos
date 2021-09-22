@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/enzoserafin/graphql_conceitos/issues"
   },
-  "homepage": "https://github.com/enzoserafin/graphql_conceitos#readme"
+  "homepage": "https://github.com/enzoserafin/graphql_conceitos#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }
