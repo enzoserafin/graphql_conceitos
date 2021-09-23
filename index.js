@@ -4,70 +4,62 @@ const { gql, ApolloServer } = require("apollo-server");
 // Schema Definition Language ou Linguagem de definição de esquema
 // SDL
 
-const produtos = [
+
+
+const db = [
     {
         id: 1,
-        nome: 'Notebook',
-        valor: 122.45
+        nome: "Enzo",
+        email: "enzo@email.com",
+        telefone: "11 1234 1234",
+        perfil: 1
     },
     {
         id: 2,
-        nome: 'Mouse',
-        valor: 10.00
+        nome: "Heitor",
+        email: "heitor@email.com",
+        telefone: "22 2323 2323",
+        perfil: 2
     }
 ]
 
-const usuarios = [
-    {
-        id: 1,
-        nome: 'Enzo',
-        salario: 1234.56,
-        ativo: true,
-        idade: 37
-    },
-    {
-        id: 2,
-        nome: 'Heitor',
-        salario: 1234.56,
-        ativo: true,
-        idade: 1
-    }
+const perfis = [
+    { id: 1, descricao: "ADMIN" },
+    { id: 2, descricao: "NORMAL" }
 ]
 
 const typeDefs = gql`
-    type Produto {
-        id: ID
-        nome: String
-        valor: Float
-    }
-    
     type Usuario {
-        idade: Int
-        salario: Float
+        id: Int
         nome: String
-        ativo: Boolean
-        id: ID
+        email: String
+        telefone: String
+        perfil: Perfil
+    }
+
+    type Perfil {
+        id: Int
+        descricao: String
     }
 
     type Query {
-        usuarios: [Usuario],
-        produtos: [Produto]
-        usuario(id: Int, nome: String): Usuario
+        usuario(id: Int): Usuario
+        perfis: [Perfil]
     }
 `
 
 const resolvers = {
+    Usuario: {
+        perfil(obj) {
+            return perfis.find(p => p.id === obj.id)
+        }
+    },
     Query: {
-        usuarios() {
-            return usuarios
+        usuario(_, args) {
+            return db.find(db => db.id === args.id)
         },
-        usuario(obg, args) {
-            const { id, nome } = args
-            if (id) return usuarios.find(u => u.id === args.id)
-            return usuarios.find(u => u.nome === args.nome)
-        },
-        produtos() {
-            return produtos
+        perfis() {
+            return perfis
         }
     }
 }
